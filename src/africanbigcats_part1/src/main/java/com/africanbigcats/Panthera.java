@@ -15,10 +15,13 @@ public class Panthera extends PantheraGPS {
     // constants 
     private final Integer maxWeight = 600;
     private final Integer minWeight = 10;
+
     // attributes
     private Integer weight;
     //private Float speed;
     private Random weightRandom;
+
+
     // constructor
     public Panthera(String name) {
 
@@ -52,6 +55,12 @@ public class Panthera extends PantheraGPS {
         return this.weight;
     }
 
+    // roar method
+    public void roar(){
+        System.out.print("Rrrrrrrrroooooooaaaaarrrrr!");
+    }
+
+
     // serializes attributes into a string
     @Override // override superclass method
     public String toString() {
@@ -69,8 +78,6 @@ public class Panthera extends PantheraGPS {
         s += " }";
         s += "weight: " + this.getWeight();
         s += " }";
-
         return s;
-
     }
 }
