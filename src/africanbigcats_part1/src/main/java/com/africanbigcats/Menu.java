@@ -60,14 +60,9 @@ public class Menu {
         else {
             rawInput = rawInput.toLowerCase();
             command = rawInput.charAt(0);
-            if (command == 13) {
-                return '_';
-            }
-            else{
-                return command;
-            }
+            return command;
         }
-        // need to fix error handling  
+        // error handling fixed  
     }
 
     // command switch
@@ -137,11 +132,29 @@ public class Menu {
             also needs to be added.
 
         */
+        System.out.print("Enter 1 for Tiger, 2 for Lion, 3 for Jaguar: ");
+        Character catChoice = getCommand();
+        Panthera result = null;
+        if (catChoice == '1'){
+            result = new Tiger(name);
+            System.out.println(String.format("\nSTATUS: %s has been added.", result.name()));
+            return result;
+        }
 
-        Panthera result = new Tiger(name);
+        else if (catChoice == '2'){
+            return null;
+        }
 
-        return result;
+        else if (catChoice == '3'){
+            return null;
+        }
 
+        else{
+            result = new Tiger(name);
+            System.out.print(String.format("\nERROR: invalid big cat type. Creating a tiger named %s", result.name()));
+            System.out.println(String.format("\nSTATUS: %s has been added.", result.name()));
+            return result;
+        }
     }
 
     // create a cat, if it's unique

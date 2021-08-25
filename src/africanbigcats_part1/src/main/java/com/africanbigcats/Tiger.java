@@ -31,6 +31,8 @@ public class Tiger extends Panthera {
         s += ", ";
         s += "latitude: " + latitude();
         s += ", ";
+        s += "weight: " + this.getWeight();
+        s += ", ";
         s += "fur: " + fur();
         s += " }";
 
