@@ -18,8 +18,10 @@ public class Panthera extends PantheraGPS {
 
     // attributes
     private Integer weight;
-    //private Float speed;
     private Random weightRandom;
+    private Float speed;
+    private Random speedRandom;
+    
 
 
     // constructor
@@ -36,6 +38,13 @@ public class Panthera extends PantheraGPS {
         this.weightRandom.setSeed(this.seed(name + "weight"));
         // set weight = weightRandom
         this.weight = weightRandom.nextInt(maxWeight - minWeight + 1) + minWeight;
+
+
+        // seed the random number generators for repeatable results
+        this.speedRandom = new Random();
+        this.speedRandom.setSeed(this.seed(name + "speed"));
+        // set speed = speedRandom
+        this.speed = (speedRandom.nextInt((int)maxSpeed * 100 - (int)minSpeed + 1) + (int)minSpeed) / 100.00f;
     }
 
     // make a seed, based on the name
@@ -53,6 +62,9 @@ public class Panthera extends PantheraGPS {
     // getters
     public Integer getWeight(){
         return this.weight;
+    }
+    public Float getSpeed(){
+        return this.speed;
     }
 
     // roar method
@@ -75,8 +87,10 @@ public class Panthera extends PantheraGPS {
         s += "longitude: " + this.longitude();
         s += ", ";
         s += "latitude: " + this.latitude();
-        s += " }";
+        s += ", ";
         s += "weight: " + this.getWeight();
+        s += ", ";
+        s += "speed: " + this.getSpeed();
         s += " }";
         return s;
     }
