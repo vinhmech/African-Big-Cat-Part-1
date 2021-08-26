@@ -33,7 +33,7 @@ public class Tiger extends Panthera {
         s += ", ";
         s += "weight: " + getWeight();
         s += ", ";
-        s += "speed: " + getSpeed();
+        s += "speed: " + speed();
         s += ", ";
         s += "fur: " + fur();
         s += " }";

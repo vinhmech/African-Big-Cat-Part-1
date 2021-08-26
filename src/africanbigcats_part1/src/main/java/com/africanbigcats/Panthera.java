@@ -63,7 +63,7 @@ public class Panthera extends PantheraGPS {
     public Integer getWeight(){
         return this.weight;
     }
-    public Float getSpeed(){
+    public Float speed(){
         return this.speed;
     }
 
@@ -90,7 +90,7 @@ public class Panthera extends PantheraGPS {
         s += ", ";
         s += "weight: " + this.getWeight();
         s += ", ";
-        s += "speed: " + this.getSpeed();
+        s += "speed: " + this.speed();
         s += " }";
         return s;
     }
