@@ -89,6 +89,10 @@ public class Menu {
                 executeQuit();
                 break;
 
+            case 'd':
+                executeDelete(catList);
+                break;
+
             default:
                 System.out.println("ERROR: Unknown commmand");
                 success = false;
@@ -184,7 +188,7 @@ public class Menu {
                 }
             }
         }
-        
+
         Panthera cat = getNewCat(name);
         catList.add(cat);
     }
@@ -216,5 +220,32 @@ public class Menu {
         Additional methods and functionality need to be added to this class.
     */
 
+    // delete a cat based on cat name
+    public void executeDelete(LinkedList<Panthera> catList){
+        // get the name
+        System.out.println();
+        System.out.print("Delete cat name: ");
+        String name = input.nextLine();
+        System.out.println();
 
+        int listSize = catList.size();
+        boolean wasRemoved = false;
+        if (listSize > 0){
+            for (int i = 0; i < listSize; i++){
+                if (catList.get(i).name().equals(name)){
+                    catList.remove(i);
+                    wasRemoved = true;
+                    System.out.println(String.format("Delete sucessful, %s has been removed", name));
+                    break;
+                }
+            }
+            if (wasRemoved == false){
+                System.out.println(String.format("Fail to delete, there is no cat name %s to delete", name));
+            }
+
+        }
+        else{
+            System.out.println("Fail to delete, there is no cat in the list to delete");
+        }
+    }
 }
