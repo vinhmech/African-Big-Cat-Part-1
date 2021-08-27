@@ -142,11 +142,15 @@ public class Menu {
         }
 
         else if (catChoice == '2'){
-            return null;
+            result = new Lion(name);
+            System.out.println(String.format("\nSTATUS: %s has been added.", result.name()));
+            return result;
         }
 
         else if (catChoice == '3'){
-            return null;
+            result = new Jaguar(name);
+            System.out.println(String.format("\nSTATUS: %s has been added.", result.name()));
+            return result;
         }
 
         else{
