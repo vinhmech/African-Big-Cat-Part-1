@@ -93,6 +93,10 @@ public class Menu {
                 executeDelete(catList);
                 break;
 
+            case 'f':
+                executeFind(catList);
+                break;
+
             default:
                 System.out.println("ERROR: Unknown commmand");
                 success = false;
@@ -247,5 +251,32 @@ public class Menu {
         else{
             System.out.println("Fail to delete, there is no cat in the list to delete");
         }
+    }
+
+    // find cat based on cat name or part of cat name
+    public void executeFind(LinkedList<Panthera> catList){
+        // get the name
+        System.out.println();
+        System.out.print("Find cat name: ");
+        String name = input.nextLine();
+        System.out.println();
+
+        int listSize = catList.size();
+        boolean catFound = false;
+        if(listSize > 0){
+            for (int i = 0; i < listSize; i++){
+                if(catList.get(i).name().contains(name)){
+                    System.out.println(catList.get(i));
+                    catFound = true;
+                }
+            }
+            if (catFound == false){
+                System.out.println(String.format("Keyword %s is not related to any cat name", name));
+            }
+        }
+        else {
+            System.out.println("Fail to find cat, there is no cat in the list to find");
+        }
+
     }
 }
