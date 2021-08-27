@@ -175,10 +175,18 @@ public class Menu {
             In this area of the code, students would need to add in checking if the cat name
             already exists in order to prevent duplicates
         */
-
+        int listSize = catList.size();
+        if (listSize > 0){
+            for (int i = 0; i < listSize; i++){
+                if (catList.get(i).name().equals(name)){
+                    System.out.println(String.format("Cat name %s has been used, can not create another cat name %s", name, name));
+                    return;
+                }
+            }
+        }
+        
         Panthera cat = getNewCat(name);
         catList.add(cat);
-
     }
 
     // list all big cats 
