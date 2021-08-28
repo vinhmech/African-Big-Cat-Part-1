@@ -2,6 +2,9 @@ package com.africanbigcats;
 
 import java.util.*;
 
+
+import java.lang.Math;
+
 /*
  * Menu class for the african big cat app
  */
@@ -95,6 +98,10 @@ public class Menu {
 
             case 'f':
                 executeFind(catList);
+                break;
+
+            case 'w':
+                executeWarningReport(catList);
                 break;
 
             default:
@@ -209,6 +216,7 @@ public class Menu {
         if (catList.size() > 0) {
             for (Integer i = 0; i < catList.size(); i++) {
                 cat = catList.get(i);
+                System.out.print(String.format("#%03d ", i+1));
                 System.out.println(cat);
             }
         } else {
@@ -216,7 +224,6 @@ public class Menu {
         }
 
         System.out.println();
-
     }
 
     /*
@@ -277,6 +284,69 @@ public class Menu {
         else {
             System.out.println("Fail to find cat, there is no cat in the list to find");
         }
+    }
 
+
+    // execute warning report
+    public void executeWarningReport(LinkedList<Panthera> catList){
+            System.out.println();
+            System.out.print("Enter your current longitude: ");
+		    String longitude_string;
+            Float userLongitude;
+            Float userLattitude;
+            try {
+              longitude_string = input.nextLine();
+              userLongitude = Float.parseFloat(longitude_string);
+            }
+            catch (NumberFormatException e) {
+              System.out.println("ERROR: The longitude entered is not a floating point number, unable to show warning report");
+              return;
+            }
+
+            System.out.print("Enter your current lattitude: ");
+		    String lattitude_string;
+            try {
+              lattitude_string = input.nextLine();
+              userLattitude = Float.parseFloat(lattitude_string);
+            }
+            catch (NumberFormatException e) {
+              System.out.println("ERROR: The lattitude entered is not a floating point number, unable to show warning report");
+              return;
+            }
+
+            int listSize = catList.size();
+            Panthera cat;
+            Double minDistance = 0.0;
+            Panthera closestCat = null;
+            System.out.println();
+            printLine();
+            System.out.println("African Big Cats Warning Report");
+            printLine();
+            if(listSize > 0){
+                minDistance = calculateDistance(userLattitude, userLongitude, catList.get(0).latitude(), catList.get(0).longitude());
+                closestCat = catList.get(0);
+                for (int i = 0; i < listSize; i++){
+                    cat = catList.get(i);
+                    Double distance = calculateDistance(userLattitude, userLongitude, cat.latitude(), cat.longitude());
+                    if (distance < minDistance){
+                        minDistance = distance;
+                        closestCat = cat;
+                    }
+                }
+                System.out.println(closestCat);
+                printLine();
+                System.out.println(String.format("The closest cat is %s which is at a distance of %.2f", closestCat.name(), minDistance));
+                System.out.println();
+            }
+            else {
+                System.out.println("No warning, there is no cat around");
+            }
+    }
+
+
+    // find distance between two coordinates
+    public Double calculateDistance(Float lattitude1, Float longitude1, Float lattitude2, Float longitude2){
+        Double distance = Math.sqrt(Math.pow((lattitude1 - lattitude2), 2) + Math.pow((longitude1 - longitude2), 2));
+        return distance;
     }
 }
