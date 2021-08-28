@@ -104,6 +104,10 @@ public class Menu {
                 executeWarningReport(catList);
                 break;
 
+            case 'r':
+                executeRiskReport(catList);
+                break;
+
             default:
                 System.out.println("ERROR: Unknown commmand");
                 success = false;
@@ -247,16 +251,19 @@ public class Menu {
                     catList.remove(i);
                     wasRemoved = true;
                     System.out.println(String.format("Delete sucessful, %s has been removed", name));
+                    System.out.println();
                     break;
                 }
             }
             if (wasRemoved == false){
                 System.out.println(String.format("Fail to delete, there is no cat name %s to delete", name));
+                System.out.println();
             }
 
         }
         else{
             System.out.println("Fail to delete, there is no cat in the list to delete");
+            System.out.println();
         }
     }
 
@@ -279,13 +286,14 @@ public class Menu {
             }
             if (catFound == false){
                 System.out.println(String.format("Keyword %s is not related to any cat name", name));
+                System.out.println();
             }
         }
         else {
             System.out.println("Fail to find cat, there is no cat in the list to find");
+            System.out.println();
         }
     }
-
 
     // execute warning report
     public void executeWarningReport(LinkedList<Panthera> catList){
@@ -300,6 +308,7 @@ public class Menu {
             }
             catch (NumberFormatException e) {
               System.out.println("ERROR: The longitude entered is not a floating point number, unable to show warning report");
+              System.out.println();
               return;
             }
 
@@ -311,6 +320,7 @@ public class Menu {
             }
             catch (NumberFormatException e) {
               System.out.println("ERROR: The lattitude entered is not a floating point number, unable to show warning report");
+              System.out.println();
               return;
             }
 
@@ -323,8 +333,10 @@ public class Menu {
             System.out.println("African Big Cats Warning Report");
             printLine();
             if(listSize > 0){
+                // asume the first cat in the list is the closest cat
                 minDistance = calculateDistance(userLattitude, userLongitude, catList.get(0).latitude(), catList.get(0).longitude());
                 closestCat = catList.get(0);
+                // loop through the list to calculate distance to other cats to find the min
                 for (int i = 0; i < listSize; i++){
                     cat = catList.get(i);
                     Double distance = calculateDistance(userLattitude, userLongitude, cat.latitude(), cat.longitude());
@@ -340,6 +352,7 @@ public class Menu {
             }
             else {
                 System.out.println("No warning, there is no cat around");
+                System.out.println();
             }
     }
 
@@ -349,4 +362,64 @@ public class Menu {
         Double distance = Math.sqrt(Math.pow((lattitude1 - lattitude2), 2) + Math.pow((longitude1 - longitude2), 2));
         return distance;
     }
+
+    // execute risk report
+    public void executeRiskReport(LinkedList<Panthera> catList){
+        int listSize = catList.size();
+        if (listSize < 2){
+            System.out.println(String.format("We have %d cat in the list, we need at least 2 cats in the tracking list to generate risk report", listSize));
+            System.out.println();
+            return;
+        }
+
+        // get the name
+        System.out.println();
+        System.out.print("Enter a name for the first big cat: ");
+        String firstCatName = input.nextLine();
+        Panthera firstCat = isCatOnTheList(firstCatName, catList);
+        if (firstCat == null){
+            System.out.println(String.format("Your first big cat %s is not on the tracking list, can not generate risk report", firstCatName));
+            return;
+        }
+
+        System.out.println();
+        System.out.print("Enter a name for the second big cat: ");
+        String secondCatName = input.nextLine();
+        Panthera secondCat = isCatOnTheList(secondCatName, catList);
+        if (secondCat == null){
+            System.out.println(String.format("Your second big cat %s is on not the tracking list, can not generate risk report", secondCatName));
+            return;
+        }
+
+        Double distanceBetweenTwoCat = calculateDistance(firstCat.latitude(), firstCat.longitude(),
+        secondCat.latitude(), secondCat.longitude());
+
+        System.out.println();
+        printLine();
+        System.out.println("African Big Cats Risk Report");
+        printLine();
+        System.out.println(firstCat);
+        System.out.println(secondCat);
+        printLine();
+        System.out.println(String.format("The distance between %s and %s is %.2f", firstCatName, secondCatName, distanceBetweenTwoCat));
+        System.out.println();
+        return;
+    }
+
+    // check if a specific cat name is on the list and return that cat object
+    public Panthera isCatOnTheList(String name, LinkedList<Panthera> catList){
+        int listSize = catList.size();
+        if (listSize > 0){
+            for (int i = 0; i < listSize; i++){
+                if(catList.get(i).name().equals(name)){
+                    return catList.get(i);
+                }
+            }
+            return null;
+        }
+        else {
+            return null;
+        }
+    }
+
 }

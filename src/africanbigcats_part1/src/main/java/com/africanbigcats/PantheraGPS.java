@@ -100,6 +100,4 @@ public class PantheraGPS {
     public Float latitude() {
         return latitude;
     }
-
-
 }
